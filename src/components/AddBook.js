@@ -32,6 +32,7 @@ const AddBook = () => (
       </label>
       <input
         type="submit"
+        value="ADD BOOK"
       />
     </form>
   </section>

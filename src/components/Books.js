@@ -23,6 +23,8 @@ const Books = () => {
                 category={item.category}
                 title={item.title}
                 author={item.author}
+                progress={item.progress}
+                currentChap={item.currentChapter}
                 id={item.id}
               />
             </li>
