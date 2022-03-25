@@ -7,13 +7,17 @@ import {
 } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import Books from './components/Books';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<App />}>
+          <Route index element={<Books />} />
+          <Route path="books" element={<Books />} />
+        </Route>
       </Routes>
     </Router>
   </React.StrictMode>,

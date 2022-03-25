@@ -5,7 +5,9 @@ import Header from './components/Header';
 const App = () => (
   <>
     <Header />
-    <Outlet />
+    <div className="content-container">
+      <Outlet />
+    </div>
   </>
 );
 
