@@ -8,6 +8,7 @@ import {
 import './index.css';
 import App from './App';
 import Books from './components/Books';
+import Categories from './components/Categories';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -17,7 +18,14 @@ ReactDOM.render(
         <Route path="/" element={<App />}>
           <Route index element={<Books />} />
           <Route path="books" element={<Books />} />
+          <Route path="categories" element={<Categories />} />
         </Route>
+        <Route
+          path="/"
+          element={
+            <h1>Nothing here!</h1>
+          }
+        />
       </Routes>
     </Router>
   </React.StrictMode>,
