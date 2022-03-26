@@ -5,7 +5,13 @@ import Header from './components/Header';
 const App = () => (
   <>
     <Header />
-    <div className="content-container">
+    <div
+      style={{
+        padding: '12px 24px',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       <Outlet />
     </div>
   </>

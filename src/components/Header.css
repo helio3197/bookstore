@@ -1,0 +1,54 @@
+.header-container,
+.header-inner,
+.header-inner nav,
+.nav-links {
+  display: flex;
+}
+
+.header-container {
+  width: 100%;
+  justify-content: center;
+  padding: 12px 24px;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: 960px;
+  justify-content: space-between;
+}
+
+.header-inner nav {
+  flex-wrap: wrap;
+  column-gap: 3.5rem;
+  row-gap: 0.5rem;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #757575;
+  letter-spacing: 2px;
+}
+
+.logo {
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: blue;
+  font-weight: bold;
+}
+
+.account-btn {
+  background: none;
+  border: 0;
+  align-self: center;
+  font-size: 1.5rem;
+  color: blue;
+  display: flex;
+}
