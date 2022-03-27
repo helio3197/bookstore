@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CircularProgress from './CircularProgress';
 
 const Book = (props) => {
   const {
@@ -37,7 +38,10 @@ const Book = (props) => {
       </div>
       <div>
         <div>
-          Progress
+          <CircularProgress
+            diameter="80"
+            progress={progress}
+          />
         </div>
         <div>
           <p>
