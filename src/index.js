@@ -21,7 +21,7 @@ ReactDOM.render(
           <Route path="categories" element={<Categories />} />
         </Route>
         <Route
-          path="/"
+          path="*"
           element={
             <h1>Nothing here!</h1>
           }
