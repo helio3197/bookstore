@@ -22,6 +22,7 @@
 - CSS
 - JavaScript
 - React
+- Redux
 
 ## Live Page
 
