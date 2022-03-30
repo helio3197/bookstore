@@ -83,7 +83,7 @@ Book.propTypes = {
   author: PropTypes.string.isRequired,
   progress: PropTypes.string,
   currentChap: PropTypes.string,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 Book.defaultProps = {
