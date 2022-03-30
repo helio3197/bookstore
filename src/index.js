@@ -5,7 +5,9 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import './index.css';
+import store from './redux/configureStore';
 import App from './App';
 import Books from './components/Books';
 import Categories from './components/Categories';
@@ -13,21 +15,25 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Books />} />
-          <Route path="books" element={<Books />} />
-          <Route path="categories" element={<Categories />} />
-        </Route>
-        <Route
-          path="*"
-          element={
-            <h1>Nothing here!</h1>
-          }
-        />
-      </Routes>
-    </Router>
+    <Provider
+      store={store}
+    >
+      <Router>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<Books />} />
+            <Route path="books" element={<Books />} />
+            <Route path="categories" element={<Categories />} />
+          </Route>
+          <Route
+            path="*"
+            element={
+              <h1>Nothing here!</h1>
+            }
+          />
+        </Routes>
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
