@@ -3,22 +3,11 @@ const REMOVED_BOOK = 'bookstore/books/REMOVED_BOOK';
 
 const reducer = (state = [], action) => {
   switch (action.type) {
-    case ADDED_BOOK: {
-      const {
-        category, title, author, progress, currentChap, id,
-      } = action;
+    case ADDED_BOOK:
       return [
         ...state,
-        {
-          category,
-          title,
-          author,
-          progress,
-          currentChap,
-          id,
-        },
+        action.data,
       ];
-    }
     case REMOVED_BOOK:
       return state.filter(({ id }) => id !== action.id);
     default:
@@ -26,17 +15,10 @@ const reducer = (state = [], action) => {
   }
 };
 
-export const addBook = ({
-  category, title, author = 'Anonymous', progress = '1', currentChap = '1', id,
-} = {}) => (
+export const addBook = (book) => (
   {
     type: ADDED_BOOK,
-    category,
-    title,
-    author,
-    progress,
-    currentChap,
-    id,
+    data: book,
   }
 );
 

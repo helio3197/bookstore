@@ -5,7 +5,7 @@ import { addBook } from '../redux/books/books';
 let id = 0;
 const AddBook = () => {
   const dispatch = useDispatch();
-  const [inputValues, setInputValues] = useState({});
+  const [inputValues, setInputValues] = useState({ category: '' });
   let titleInput = useRef(null);
   let categoryInput = useRef(null);
   let authorInput = useRef(null);
