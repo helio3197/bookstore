@@ -26,7 +26,9 @@ const reducer = (state = [], action) => {
   }
 };
 
-export const addBook = (category, title, author, progress, currentChap, id) => (
+export const addBook = ({
+  category, title, author = 'Anonymous', progress = '1', currentChap = '1', id,
+} = {}) => (
   {
     type: ADDED_BOOK,
     category,

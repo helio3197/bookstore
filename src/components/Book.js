@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { removeBook } from '../redux/books/books';
 import CircularProgress from './CircularProgress';
 
 const Book = (props) => {
+  const dispatch = useDispatch();
+
   const {
-    category, title, author, progress, currentChap,
+    category, title, author, progress, currentChap, id,
   } = props;
+
+  const removeHandler = () => {
+    dispatch(removeBook(id));
+  };
+
   return (
     <div>
       <div>
@@ -25,7 +34,10 @@ const Book = (props) => {
             </button>
           </li>
           <li>
-            <button type="button">
+            <button
+              type="button"
+              onClick={removeHandler}
+            >
               Remove
             </button>
           </li>
@@ -71,6 +83,7 @@ Book.propTypes = {
   author: PropTypes.string.isRequired,
   progress: PropTypes.string.isRequired,
   currentChap: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Book;
