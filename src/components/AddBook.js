@@ -1,22 +1,51 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addBook } from '../redux/books/books';
 
 let id = 0;
 const AddBook = () => {
   const dispatch = useDispatch();
+  const [inputValues, setInputValues] = useState({});
   let titleInput = useRef(null);
   let categoryInput = useRef(null);
+  let authorInput = useRef(null);
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    const { title, author, category } = inputValues;
+
     dispatch(addBook({
-      title: titleInput.value,
-      category: (categoryInput.value !== '') ? categoryInput.value : 'category-not-provided',
+      title,
+      author,
+      category: (category !== '') ? category : 'category-not-provided',
       id: id += 1,
     }));
     titleInput.value = '';
     categoryInput.value = '';
+    authorInput.value = '';
+    setInputValues({ category: '' });
+  };
+
+  const titleHandler = (e) => {
+    setInputValues((state) => ({
+      ...state,
+      title: e.target.value,
+    }));
+  };
+
+  const authorHandler = (e) => {
+    setInputValues((state) => ({
+      ...state,
+      author: e.target.value,
+    }));
+  };
+
+  const categoryHandler = (e) => {
+    setInputValues((state) => ({
+      ...state,
+      category: e.target.value,
+    }));
   };
 
   return (
@@ -35,6 +64,18 @@ const AddBook = () => {
             placeholder="Book title"
             required
             ref={(node) => { titleInput = node; }}
+            onChange={titleHandler}
+          />
+        </label>
+        <label htmlFor="author">
+          <input
+            type="text"
+            id="author"
+            name="author"
+            placeholder="Author"
+            required
+            ref={(node) => { authorInput = node; }}
+            onChange={authorHandler}
           />
         </label>
         <label htmlFor="category">
@@ -43,6 +84,7 @@ const AddBook = () => {
             placeholder="Category"
             name="category"
             ref={(node) => { categoryInput = node; }}
+            onChange={categoryHandler}
           />
           <datalist
             id="category"
