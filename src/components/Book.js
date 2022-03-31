@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeBook } from '../redux/books/books';
 import CircularProgress from './CircularProgress';
 
 const Book = (props) => {
+  const { status, error } = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
   const {
@@ -40,6 +41,9 @@ const Book = (props) => {
             >
               Remove
             </button>
+            {(status === 'REMOVE_BOOK_FAILED')
+              ? (<small>{`An error has occurred: ${error}`}</small>)
+              : ''}
           </li>
           <li>
             <button type="button">

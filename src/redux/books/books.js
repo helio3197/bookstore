@@ -1,10 +1,11 @@
-const REMOVED_BOOK = 'bookstore/books/REMOVED_BOOK';
 const FETCH_BOOKS_BEGAN = 'bookstore/books/FETCH_BOOKS_BEGAN';
 const FETCH_BOOKS_FAILED = 'bookstore/books/FETCH_BOOKS_FAILED';
 const FETCH_BOOKS_WORKED = 'bookstore/books/FETCH_BOOKS_WORKED';
 const ADD_NEW_BOOK_BEGAN = 'bookstore/books/ADD_NEW_BOOK_BEGAN';
 const ADD_NEW_BOOK_SUCCEEDED = 'bookstore/books/ADD_NEW_BOOK_SUCCEEDED';
 const ADD_NEW_BOOK_FAILED = 'bookstore/books/ADD_NEW_BOOK_FAILED';
+const REMOVE_BOOK_SUCCEEDED = 'bookstore/books/REMOVE_BOOK_SUCCEEDED';
+const REMOVE_BOOK_FAILED = 'bookstore/books/REMOVE_BOOK_FAILED';
 const API_URL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/l2jyXNEHML0zwudM1nso/books';
 
 const reducer = (state = { status: '', booksList: {} }, action) => {
@@ -32,8 +33,20 @@ const reducer = (state = { status: '', booksList: {} }, action) => {
           ],
         },
       };
-    case REMOVED_BOOK:
-      return state.filter(({ id }) => id !== action.id);
+    case REMOVE_BOOK_SUCCEEDED: {
+      const updatedBooklist = state.booksList;
+      delete updatedBooklist[action.id];
+      return {
+        status: 'REMOVE_BOOK_SUCCEEDED',
+        booksList: updatedBooklist,
+      };
+    }
+    case REMOVE_BOOK_FAILED:
+      return {
+        status: 'REMOVE_BOOK_FAILED',
+        booksList: state.booksList,
+        error: action.error,
+      };
     case FETCH_BOOKS_BEGAN:
       return {
         status: 'FETCHING_BOOKS',
@@ -52,13 +65,6 @@ const reducer = (state = { status: '', booksList: {} }, action) => {
       return state;
   }
 };
-
-export const removeBook = (id) => (
-  {
-    type: REMOVED_BOOK,
-    id,
-  }
-);
 
 const fetchBooksBegin = () => (
   {
@@ -127,6 +133,41 @@ export const addNewBook = (book) => async (dispatch) => {
     return dispatch(addNewBookSuccess(book));
   } catch (error) {
     return dispatch(addNewBookFailure(error));
+  }
+};
+
+const removeBookSucess = (id) => (
+  {
+    type: REMOVE_BOOK_SUCCEEDED,
+    id,
+  }
+);
+
+const removeBookFailure = (error) => (
+  {
+    type: REMOVE_BOOK_FAILED,
+    error,
+  }
+);
+
+export const removeBook = (id) => async (dispatch) => {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        item_id: id,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    const result = await response.text();
+    if (!response.ok) {
+      throw Error(result);
+    }
+    return dispatch(removeBookSucess(id));
+  } catch (error) {
+    return dispatch(removeBookFailure(error));
   }
 };
 
