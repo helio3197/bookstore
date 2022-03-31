@@ -5,7 +5,7 @@ import Book from './Book';
 import AddBook from './AddBook';
 
 const Books = () => {
-  const bookList = useSelector((state) => state.books);
+  const { booksList, status } = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,27 +13,28 @@ const Books = () => {
   }, []);
 
   const renderState = () => {
-    if (bookList.status === 'FETCHING_BOOKS') {
+    if (status === 'FETCHING_BOOKS') {
       return (
         <h1>LOADING ...</h1>
       );
     }
-    if (bookList.status === 'FETCHING_FAILED') {
+    if (status === 'FETCHING_FAILED') {
       return (
         <h1>
-          {`SOMETHING WENT WRONG: ${bookList.error}`}
+          {`SOMETHING WENT WRONG: ${booksList.error}`}
         </h1>
       );
     }
-    if (!Object.keys(bookList).length) {
+    const booksIdArr = Object.keys(booksList);
+    if (!booksIdArr.length) {
       return (
         <h1>There are no books yet.</h1>
       );
     }
     return (
       <ul>
-        {Object.keys(bookList).map((bookId) => {
-          const book = bookList[bookId][0];
+        {booksIdArr.map((bookId) => {
+          const book = booksList[bookId][0];
           return (
             <li key={bookId}>
               <Book
