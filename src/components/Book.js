@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeBook } from '../redux/books/books';
 import CircularProgress from './CircularProgress';
 
 const Book = (props) => {
+  const { status, error } = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
   const {
@@ -40,6 +41,9 @@ const Book = (props) => {
             >
               Remove
             </button>
+            {(status === 'REMOVE_BOOK_FAILED')
+              ? (<small>{`An error has occurred: ${error}`}</small>)
+              : ''}
           </li>
           <li>
             <button type="button">
@@ -81,9 +85,14 @@ Book.propTypes = {
   category: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
-  progress: PropTypes.string.isRequired,
-  currentChap: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  progress: PropTypes.string,
+  currentChap: PropTypes.string,
+  id: PropTypes.string.isRequired,
+};
+
+Book.defaultProps = {
+  progress: '1',
+  currentChap: '1',
 };
 
 export default Book;

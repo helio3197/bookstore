@@ -23,6 +23,7 @@
 - JavaScript
 - React
 - Redux
+- APIs
 
 ## Live Page
 

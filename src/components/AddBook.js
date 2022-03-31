@@ -1,25 +1,31 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { addBook } from '../redux/books/books';
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import { addNewBook } from '../redux/books/books';
 
-let id = 0;
 const AddBook = () => {
+  const { status, error } = useSelector((state) => state.books);
   const dispatch = useDispatch();
-  const [inputValues, setInputValues] = useState({});
+  const [inputValues, setInputValues] = useState({ category: '' });
+  const [localState, setLocalState] = useState(status);
   let titleInput = useRef(null);
   let categoryInput = useRef(null);
   let authorInput = useRef(null);
+
+  useEffect(() => {
+    setLocalState(status);
+  }, [status]);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     const { title, author, category } = inputValues;
 
-    dispatch(addBook({
+    dispatch(addNewBook({
       title,
       author,
-      category: (category !== '') ? category : 'category-not-provided',
-      id: id += 1,
+      category: (category !== '') ? category : 'uncategorized',
+      item_id: uuidv4(),
     }));
     titleInput.value = '';
     categoryInput.value = '';
@@ -46,6 +52,34 @@ const AddBook = () => {
       ...state,
       category: e.target.value,
     }));
+  };
+
+  const checkStatus = (status) => {
+    switch (status) {
+      case 'ADD_NEW_BOOK_BEGAN':
+        return (
+          <small>
+            Uploading book ...
+          </small>
+        );
+      case 'ADD_NEW_BOOK_FAILED':
+        return (
+          <small>
+            {`An error has occurred: ${error}`}
+          </small>
+        );
+      case 'ADD_NEW_BOOK_SUCCEEDED':
+        setTimeout(() => {
+          setLocalState('INITIAL_STATE');
+        }, 3000);
+        return (
+          <small>
+            Book added successfully.
+          </small>
+        );
+      default:
+        return '';
+    }
   };
 
   return (
@@ -95,12 +129,22 @@ const AddBook = () => {
             <option>
               Fantasy
             </option>
+            <option>
+              Economy
+            </option>
+            <option>
+              Science Fiction
+            </option>
+            <option>
+              Drama
+            </option>
           </datalist>
         </label>
         <input
           type="submit"
           value="ADD BOOK"
         />
+        {checkStatus(localState)}
       </form>
     </section>
   );

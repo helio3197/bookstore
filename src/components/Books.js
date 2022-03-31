@@ -1,28 +1,61 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchBooks } from '../redux/books/books';
 import Book from './Book';
 import AddBook from './AddBook';
 
 const Books = () => {
-  const bookList = useSelector((state) => state.books);
+  const { booksList, status } = useSelector((state) => state.books);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchBooks());
+  }, []);
+
+  const renderState = () => {
+    if (status === 'FETCHING_BOOKS') {
+      return (
+        <h1>LOADING ...</h1>
+      );
+    }
+    if (status === 'FETCHING_FAILED') {
+      return (
+        <h1>
+          {`SOMETHING WENT WRONG: ${booksList.error}`}
+        </h1>
+      );
+    }
+    const booksIdArr = Object.keys(booksList);
+    if (!booksIdArr.length) {
+      return (
+        <h1>There are no books yet.</h1>
+      );
+    }
+    return (
+      <ul>
+        {booksIdArr.map((bookId) => {
+          const book = booksList[bookId][0];
+          return (
+            <li key={bookId}>
+              <Book
+                category={book.category}
+                title={book.title}
+                author={book.author}
+                progress={book.progress}
+                currentChap={book.currentChap}
+                id={bookId}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
 
   return (
     <div className="inner">
       <section className="book-list">
-        <ul>
-          {bookList.map((item) => (
-            <li key={item.id}>
-              <Book
-                category={item.category}
-                title={item.title}
-                author={item.author}
-                progress={item.progress}
-                currentChap={item.currentChap}
-                id={item.id}
-              />
-            </li>
-          ))}
-        </ul>
+        {renderState()}
       </section>
       <AddBook />
     </div>
