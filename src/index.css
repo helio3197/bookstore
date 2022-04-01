@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --gray: #525252;
+  --gray-two: #757575;
+  --black: #121212;
+  --blue: #4386bf;
+  --blue-two: #0290ff;
 }
 
 html {

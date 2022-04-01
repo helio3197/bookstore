@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeBook } from '../redux/books/books';
 import CircularProgress from './CircularProgress';
+import styles from './Book.module.css';
 
 const Book = (props) => {
   const { status, error } = useSelector((state) => state.books);
@@ -17,18 +18,18 @@ const Book = (props) => {
   };
 
   return (
-    <div>
-      <div>
-        <small>
+    <div className={styles.bookItemContainer}>
+      <div className={styles.bookItemAbout}>
+        <small className={styles.bookItemCategory}>
           {category}
         </small>
-        <h2>
+        <h2 className={styles.bookItemTitle}>
           {title}
         </h2>
-        <p>
+        <p className={styles.bookItemAuthor}>
           {author}
         </p>
-        <ul>
+        <ul className={styles.bookItemActionBtns}>
           <li>
             <button type="button">
               Comments
@@ -52,30 +53,33 @@ const Book = (props) => {
           </li>
         </ul>
       </div>
-      <div>
-        <div>
-          <CircularProgress
-            diameter="80"
-            progress={progress}
-          />
+      <div className={styles.bookItemRightHandContainer}>
+        <div className={styles.bookItemProgressWrap}>
+          <div>
+            <CircularProgress
+              diameter="70"
+              progress={progress}
+            />
+          </div>
+          <div className={styles.bookItemProgress}>
+            <p>
+              {`${progress}%`}
+            </p>
+            <small>Completed</small>
+          </div>
         </div>
-        <div>
+        <div className={styles.bookItemChapterInfo}>
+          <small>CURRENT CHAPTER</small>
           <p>
-            {`${progress}%`}
+            {`Chapter ${currentChap}`}
           </p>
-          <small>Completed</small>
+          <button
+            className="button"
+            type="button"
+          >
+            UPDATE PROGRESS
+          </button>
         </div>
-      </div>
-      <div>
-        <small>CURRENT CHAPTER</small>
-        <p>
-          {`Chapter ${currentChap}`}
-        </p>
-        <button
-          type="button"
-        >
-          UPDATE PROGRESS
-        </button>
       </div>
     </div>
   );
