@@ -1,0 +1,38 @@
+.circular {
+  position: relative;
+}
+
+.circular .inner {
+  position: absolute;
+  z-index: 6;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 100%;
+}
+
+.circular .bar {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: lightgray;
+  border-radius: 100%;
+}
+
+.circle .bar .progress {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  background: #4158d0;
+}
+
+.circle .left .progress {
+  z-index: 1;
+}
+
+.circle .right {
+  transform: rotate(180deg);
+  z-index: 3;
+}

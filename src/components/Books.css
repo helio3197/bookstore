@@ -1,0 +1,46 @@
+.inner {
+  width: 100%;
+  max-width: 960px;
+  padding: 24px;
+}
+
+.book-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+}
+
+.button {
+  border: 0;
+  background-color: var(--blue-two);
+  border-radius: 3px;
+  padding: 7px 18px;
+  font-family: 'Roboto Slab', 'Ubuntu', serif;
+  color: white;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: var(--blue);
+}
+
+.button:active {
+  background-color: blue;
+}
+
+@media (max-width: 530px) {
+  .inner {
+    padding: 0;
+  }
+
+  .book-list {
+    align-items: center;
+  }
+
+  .book-list > li {
+    display: flex;
+  }
+}
