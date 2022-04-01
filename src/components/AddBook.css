@@ -6,7 +6,6 @@
 
 .addBookContainer {
   flex-direction: column;
-  align-items: center;
 }
 
 .addBookHeader {
@@ -20,6 +19,10 @@
 
 .addBookForm {
   gap: 28px;
+}
+
+[for="title"] > input {
+  width: 100%;
 }
 
 .addBookForm input:not([type="submit"]) {
@@ -36,7 +39,9 @@
 }
 
 [for="title"] {
-  max-width: 300px !important;
+  flex: 1;
+  min-width: 250px;
+  max-width: none !important;
 }
 
 [for="category"] {
@@ -44,7 +49,8 @@
 }
 
 .addBookForm > [type="submit"] {
-  max-width: 106px;
+  max-width: 134px;
+  padding: 7px 32px;
 }
 
 .addBookStatus {
@@ -53,6 +59,10 @@
 }
 
 @media (max-width: 830px) {
+  .addBookContainer {
+    align-items: center;
+  }
+
   .addBookHeader {
     flex-direction: column;
     margin-bottom: 8px;
