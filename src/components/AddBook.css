@@ -1,0 +1,75 @@
+.addBookContainer,
+.addBookHeader,
+.addBookForm {
+  display: flex;
+}
+
+.addBookContainer {
+  flex-direction: column;
+  align-items: center;
+}
+
+.addBookHeader {
+  align-items: center;
+}
+
+.addBookTitle {
+  color: var(--gray);
+  margin-right: 24px;
+}
+
+.addBookForm {
+  gap: 28px;
+}
+
+.addBookForm input:not([type="submit"]) {
+  padding: 8px;
+  width: inherit;
+  max-width: inherit;
+  border: 1px solid var(--gray-two);
+  border-radius: 3px;
+}
+
+.addBookForm > label {
+  width: 100%;
+  max-width: 200px;
+}
+
+[for="title"] {
+  max-width: 300px !important;
+}
+
+[for="category"] {
+  max-width: 150px !important;
+}
+
+.addBookForm > [type="submit"] {
+  max-width: 106px;
+}
+
+.addBookStatus {
+  font-weight: bold;
+  color: var(--gray);
+}
+
+@media (max-width: 830px) {
+  .addBookHeader {
+    flex-direction: column;
+    margin-bottom: 8px;
+  }
+
+  .addBookTitle {
+    margin-right: 0;
+    margin-bottom: 24px;
+  }
+
+  .addBookForm {
+    flex-direction: column;
+    width: 100%;
+    max-width: 345px;
+  }
+
+  .addBookForm > label {
+    max-width: none !important;
+  }
+}

@@ -55,7 +55,10 @@ const Books = () => {
 
   return (
     <div className="inner">
-      <section>
+      <section style={{
+        marginBottom: '48px',
+      }}
+      >
         {renderState()}
       </section>
       <AddBook />

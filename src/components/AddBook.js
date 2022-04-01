@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { addNewBook } from '../redux/books/books';
+import './AddBook.css';
 
 const AddBook = () => {
   const { status, error } = useSelector((state) => state.books);
@@ -58,13 +59,13 @@ const AddBook = () => {
     switch (status) {
       case 'ADD_NEW_BOOK_BEGAN':
         return (
-          <small>
+          <small className="addBookStatus">
             Uploading book ...
           </small>
         );
       case 'ADD_NEW_BOOK_FAILED':
         return (
-          <small>
+          <small className="addBookStatus">
             {`An error has occurred: ${error}`}
           </small>
         );
@@ -73,7 +74,7 @@ const AddBook = () => {
           setLocalState('INITIAL_STATE');
         }, 3000);
         return (
-          <small>
+          <small className="addBookStatus">
             Book added successfully.
           </small>
         );
@@ -83,11 +84,17 @@ const AddBook = () => {
   };
 
   return (
-    <section>
-      <h2>
-        ADD NEW BOOK
-      </h2>
+    <section className="addBookContainer">
+      <div
+        className="addBookHeader"
+      >
+        <h2 className="addBookTitle">
+          ADD NEW BOOK
+        </h2>
+        {checkStatus(localState)}
+      </div>
       <form
+        className="addBookForm"
         onSubmit={submitHandler}
       >
         <label htmlFor="title">
@@ -141,10 +148,10 @@ const AddBook = () => {
           </datalist>
         </label>
         <input
+          className="button"
           type="submit"
           value="ADD BOOK"
         />
-        {checkStatus(localState)}
       </form>
     </section>
   );
