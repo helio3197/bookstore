@@ -66,7 +66,7 @@
 .bookItemProgressWrap {
   align-items: center;
   padding-right: 5rem;
-  border-right: 1px solid;
+  border-right: 1px solid #c5c5c5;
 }
 
 .bookItemActionBtns {
