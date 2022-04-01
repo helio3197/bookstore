@@ -22,8 +22,8 @@ const CircularProgress = ({ progress, diameter }) => {
       <div
         className="inner"
         style={{
-          width: `${diameter - 20}px`,
-          height: `${diameter - 20}px`,
+          width: '80%',
+          height: '80%',
         }}
       />
       <div className="circle">

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchBooks } from '../redux/books/books';
+import './Books.css';
 import Book from './Book';
 import AddBook from './AddBook';
 
@@ -32,7 +33,7 @@ const Books = () => {
       );
     }
     return (
-      <ul>
+      <ul className="book-list">
         {booksIdArr.map((bookId) => {
           const book = booksList[bookId][0];
           return (
@@ -54,7 +55,7 @@ const Books = () => {
 
   return (
     <div className="inner">
-      <section className="book-list">
+      <section>
         {renderState()}
       </section>
       <AddBook />
