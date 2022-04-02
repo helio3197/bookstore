@@ -27,7 +27,9 @@
 
 ## Live Page
 
-[Page Link](https://helio3197.github.io/bookstore/)
+[Click Here](https://bookstore-helio.herokuapp.com/)
+
+[Click Here](https://bookstore-helio.netlify.app/)
 
 
 ## Getting Started
