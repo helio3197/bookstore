@@ -31,7 +31,29 @@
   background-color: blue;
 }
 
-@media (max-width: 530px) {
+.button:disabled:hover {
+  cursor: initial;
+  background-color: var(--blue-two);
+}
+
+.button:disabled:active {
+  background-color: var(--blue-two);
+}
+
+.cancel-btn {
+  background-color: #ddd;
+  color: var(--blue-two);
+}
+
+.cancel-btn:hover {
+  background-color: lightgray;
+}
+
+.cancel-btn:active {
+  background-color: var(--gray-two);
+}
+
+@media (max-width: 555px) {
   .inner {
     padding: 0;
   }
