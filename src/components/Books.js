@@ -45,7 +45,7 @@ const Books = () => {
                 author={book.author}
                 progress={(book.chaptersTotal === 'unset') ? '1' : Math.floor((book.progress * 100) / book.chaptersTotal).toString()}
                 currentChap={book.progress.toString()}
-                chaptersTotal={(book.chaptersTotal === 'unset') ? '' : book.chaptersTotal}
+                chaptersTotal={(book.chaptersTotal === 'unset') ? '' : book.chaptersTotal.toString()}
                 id={bookId}
               />
             </li>

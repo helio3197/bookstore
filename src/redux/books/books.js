@@ -4,6 +4,7 @@ const FETCH_BOOKS_WORKED = 'bookstore/books/FETCH_BOOKS_WORKED';
 const ADD_NEW_BOOK_BEGAN = 'bookstore/books/ADD_NEW_BOOK_BEGAN';
 const ADD_NEW_BOOK_SUCCEEDED = 'bookstore/books/ADD_NEW_BOOK_SUCCEEDED';
 const ADD_NEW_BOOK_FAILED = 'bookstore/books/ADD_NEW_BOOK_FAILED';
+const REMOVE_BOOK_BEGAN = 'bookstore/books/REMOVE_BOOK_BEGAN';
 const REMOVE_BOOK_SUCCEEDED = 'bookstore/books/REMOVE_BOOK_SUCCEEDED';
 const REMOVE_BOOK_FAILED = 'bookstore/books/REMOVE_BOOK_FAILED';
 const UPDATE_PROGRESS_BEGAN = 'bookstore/books/UPDATE_PROGRESS_BEGAN';
@@ -36,6 +37,11 @@ const reducer = (state = { status: '', booksList: {} }, action) => {
             },
           ],
         },
+      };
+    case REMOVE_BOOK_BEGAN:
+      return {
+        status: 'REMOVE_BOOK_BEGAN',
+        booksList: state.booksList,
       };
     case REMOVE_BOOK_SUCCEEDED: {
       const updatedBooklist = { ...state.booksList };
@@ -191,6 +197,12 @@ export const addNewBook = (book) => async (dispatch) => {
   }
 };
 
+const removeBookBegin = () => (
+  {
+    type: REMOVE_BOOK_BEGAN,
+  }
+);
+
 const removeBookSucess = (id) => (
   {
     type: REMOVE_BOOK_SUCCEEDED,
@@ -206,6 +218,7 @@ const removeBookFailure = (error) => (
 );
 
 export const removeBook = (id) => async (dispatch) => {
+  dispatch(removeBookBegin());
   try {
     const response = await fetch(`${API_URL}/${id}`, {
       method: 'DELETE',

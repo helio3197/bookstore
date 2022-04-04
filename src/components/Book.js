@@ -11,26 +11,35 @@ const Book = (props) => {
   } = props;
   const { status, error } = useSelector((state) => state.books);
   const [triggerUpdateProgress, setTriggerUpdateProgress] = useState(false);
+  const [triggerActionStatus, setTriggerActionStatus] = useState(false);
   const [updateProgressInputs, setUpdateProgressInputs] = useState({ currentChap, chaptersTotal });
   const [raisedError, setRaisedError] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (status === 'UPDATE_SUCCEEDED') {
+    if (status === 'UPDATE_SUCCEEDED' && triggerActionStatus) {
       setTriggerUpdateProgress(false);
+      setTriggerActionStatus(false);
       if (raisedError) setRaisedError('');
     }
-    if (status === 'UPDATE_FAILED') setRaisedError(`Something went wrong: ${error}`);
+    if (status === 'UPDATE_FAILED' && triggerActionStatus) {
+      setRaisedError(`Something went wrong: ${error}`);
+      setTriggerActionStatus(false);
+    }
   }, [status]);
 
   const removeHandler = () => {
     dispatch(removeBook(id));
+    setTriggerActionStatus(true);
   };
 
   const submitUpdate = () => {
     const { currentChap, chaptersTotal } = updateProgressInputs;
     if (+currentChap < 1) return setRaisedError('Current chapter can\'t be less than 1');
+    if (+currentChap > 999) return setRaisedError('Current chapter can\'t be greater than 999');
     if (+chaptersTotal < 1) return setRaisedError('Total chapters can\'t be less than 1');
+    if (+chaptersTotal > 999) return setRaisedError('Total chapters can\'t be greater than 999');
+    setTriggerActionStatus(true);
     return dispatch(updateProgress(id, currentChap, chaptersTotal));
   };
 
@@ -55,11 +64,12 @@ const Book = (props) => {
           <li>
             <button
               type="button"
+              disabled={status === 'REMOVE_BOOK_BEGAN' && triggerActionStatus}
               onClick={removeHandler}
             >
-              Remove
+              {(status === 'REMOVE_BOOK_BEGAN' && triggerActionStatus) ? 'Removing...' : 'Remove'}
             </button>
-            {(status === 'REMOVE_BOOK_FAILED')
+            {(status === 'REMOVE_BOOK_FAILED' && triggerActionStatus)
               ? (<small>{`An error has occurred: ${error}`}</small>)
               : ''}
           </li>
@@ -104,14 +114,16 @@ const Book = (props) => {
                   <input
                     type="number"
                     min="1"
+                    max="999"
                     value={updateProgressInputs.currentChap}
-                    placeholder="Current chapter"
+                    title="Current chapter"
                     onChange={(e) => setUpdateProgressInputs((state) => (
                       { ...state, currentChap: e.target.value }
                     ))}
                   />
                   <button
                     type="button"
+                    disabled={(+updateProgressInputs.currentChap >= 999)}
                     onClick={() => setUpdateProgressInputs((state) => ({
                       ...state,
                       currentChap: +state.currentChap + 1,
@@ -135,14 +147,16 @@ const Book = (props) => {
                   <input
                     type="number"
                     min="1"
+                    max="999"
                     value={updateProgressInputs.chaptersTotal}
-                    placeholder="Total chapters"
+                    title="Total chapters"
                     onChange={(e) => setUpdateProgressInputs((state) => (
                       { ...state, chaptersTotal: e.target.value }
                     ))}
                   />
                   <button
                     type="button"
+                    disabled={(+updateProgressInputs.chaptersTotal >= 999)}
                     onClick={() => setUpdateProgressInputs((state) => ({
                       ...state,
                       chaptersTotal: +state.chaptersTotal + 1,
@@ -156,17 +170,18 @@ const Book = (props) => {
                 <button
                   className="button"
                   type="button"
-                  disabled={status === 'UPDATE_BEGAN'}
+                  disabled={status === 'UPDATE_BEGAN' && triggerActionStatus}
                   onClick={submitUpdate}
                 >
-                  {(status === 'UPDATE_BEGAN') ? 'SAVING...' : 'SAVE'}
+                  {(status === 'UPDATE_BEGAN' && triggerActionStatus) ? 'SAVING...' : 'SAVE'}
                 </button>
                 <button
-                  className="button"
+                  className="button cancel-btn"
                   type="button"
                   onClick={() => {
                     setTriggerUpdateProgress(false);
                     setUpdateProgressInputs({ currentChap, chaptersTotal });
+                    setRaisedError('');
                   }}
                 >
                   CANCEL
