@@ -89,35 +89,89 @@ const Book = (props) => {
           ? (
             <div className={styles.bookItemChapterInfo}>
               <small>UPDATE PROGRESS</small>
-              <div>
-                <input
-                  type="number"
-                  min="1"
-                  value={updateProgressInputs.currentChap}
-                  placeholder="Current chapter"
-                  onChange={(e) => setUpdateProgressInputs((state) => (
-                    { ...state, currentChap: e.target.value }
-                  ))}
-                />
+              <div className={styles.updateProgressInputs}>
+                <div>
+                  <button
+                    type="button"
+                    disabled={(+updateProgressInputs.currentChap <= 1)}
+                    onClick={() => setUpdateProgressInputs((state) => ({
+                      ...state,
+                      currentChap: state.currentChap - 1,
+                    }))}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    min="1"
+                    value={updateProgressInputs.currentChap}
+                    placeholder="Current chapter"
+                    onChange={(e) => setUpdateProgressInputs((state) => (
+                      { ...state, currentChap: e.target.value }
+                    ))}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setUpdateProgressInputs((state) => ({
+                      ...state,
+                      currentChap: +state.currentChap + 1,
+                    }))}
+                  >
+                    +
+                  </button>
+                </div>
                 of
-                <input
-                  type="number"
-                  min="1"
-                  value={updateProgressInputs.chaptersTotal}
-                  placeholder="Total chapters"
-                  onChange={(e) => setUpdateProgressInputs((state) => (
-                    { ...state, chaptersTotal: e.target.value }
-                  ))}
-                />
+                <div>
+                  <button
+                    type="button"
+                    disabled={(+updateProgressInputs.chaptersTotal <= 1)}
+                    onClick={() => setUpdateProgressInputs((state) => ({
+                      ...state,
+                      chaptersTotal: state.chaptersTotal - 1,
+                    }))}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    min="1"
+                    value={updateProgressInputs.chaptersTotal}
+                    placeholder="Total chapters"
+                    onChange={(e) => setUpdateProgressInputs((state) => (
+                      { ...state, chaptersTotal: e.target.value }
+                    ))}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setUpdateProgressInputs((state) => ({
+                      ...state,
+                      chaptersTotal: +state.chaptersTotal + 1,
+                    }))}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
-              <button
-                className="button"
-                type="button"
-                disabled={status === 'UPDATE_BEGAN'}
-                onClick={submitUpdate}
-              >
-                {(status === 'UPDATE_BEGAN') ? 'SAVING...' : 'SAVE'}
-              </button>
+              <div className={styles.updateProgressBtns}>
+                <button
+                  className="button"
+                  type="button"
+                  disabled={status === 'UPDATE_BEGAN'}
+                  onClick={submitUpdate}
+                >
+                  {(status === 'UPDATE_BEGAN') ? 'SAVING...' : 'SAVE'}
+                </button>
+                <button
+                  className="button"
+                  type="button"
+                  onClick={() => {
+                    setTriggerUpdateProgress(false);
+                    setUpdateProgressInputs({ currentChap, chaptersTotal });
+                  }}
+                >
+                  CANCEL
+                </button>
+              </div>
               <small>
                 {raisedError}
               </small>

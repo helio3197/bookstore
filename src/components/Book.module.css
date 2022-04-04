@@ -3,7 +3,9 @@
 .bookItemRightHandContainer,
 .bookItemProgressWrap,
 .bookItemActionBtns,
-.bookItemChapterInfo {
+.bookItemChapterInfo,
+.updateProgressBtns,
+.updateProgressInputs {
   display: flex;
 }
 
@@ -97,6 +99,18 @@
 .bookItemChapterInfo > p {
   margin: 7px 0 23px;
   color: var(--black);
+}
+
+.updateProgressBtns {
+
+}
+
+.updateProgressInputs {
+  margin: 7px 0 23px;
+}
+
+.updateProgressInputs input {
+  width: 50px;
 }
 
 @media (max-width: 830px) {
