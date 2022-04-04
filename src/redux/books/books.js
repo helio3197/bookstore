@@ -149,7 +149,7 @@ const addNewBookFailure = (error) => (
 const addNewBookSuccess = (book) => (
   {
     type: ADD_NEW_BOOK_SUCCEEDED,
-    data: book,
+    data: { ...book, progress: '1', chaptersTotal: 'unset' },
   }
 );
 
@@ -171,7 +171,7 @@ export const addNewBook = (book) => async (dispatch) => {
     const responseUpdateProgress = await fetch(API_URL_PROGRESS, {
       method: 'POST',
       body: JSON.stringify({
-        item_id: book.id,
+        item_id: book.item_id,
         title: 'This object is used to store the progress',
         author: 'Kenny',
         category: { progress: '1', chaptersTotal: 'unset' },
