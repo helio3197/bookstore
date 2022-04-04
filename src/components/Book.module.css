@@ -3,7 +3,9 @@
 .bookItemRightHandContainer,
 .bookItemProgressWrap,
 .bookItemActionBtns,
-.bookItemChapterInfo {
+.bookItemChapterInfo,
+.updateProgressBtns,
+.updateProgressInputs {
   display: flex;
 }
 
@@ -35,6 +37,11 @@
 
 .bookItemActionBtns button:hover {
   color: #0030ff;
+}
+
+.bookItemActionBtns button:disabled:hover {
+  color: var(--blue);
+  cursor: initial;
 }
 
 .bookItemCategory {
@@ -92,11 +99,38 @@
 .bookItemChapterInfo {
   padding-left: 5rem;
   flex-direction: column;
+  min-width: 275px;
 }
 
 .bookItemChapterInfo > p {
   margin: 7px 0 23px;
   color: var(--black);
+}
+
+.updateProgressBtns {
+  justify-content: space-between;
+}
+
+.updateProgressInputs {
+  margin: 7px 0 23px;
+  gap: 4px;
+}
+
+.updateProgressInputs input {
+  width: 32px;
+  text-align: center;
+}
+
+.updateProgressInputs input::-webkit-outer-spin-button,
+.updateProgressInputs input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@supports (-moz-appearance: textfield) {
+  .updateProgressInputs input[type=number] {
+    -moz-appearance: textfield;
+  }
 }
 
 @media (max-width: 830px) {
@@ -113,14 +147,15 @@
 
   .bookItemChapterInfo {
     align-items: flex-end;
+    min-width: auto;
   }
 
   .bookItemChapterInfo > * {
-    min-width: 165px;
+    min-width: 190px;
   }
 }
 
-@media (max-width: 530px) {
+@media (max-width: 555px) {
   .bookItemContainer {
     gap: 1.2rem;
     padding: 24px 36px;
