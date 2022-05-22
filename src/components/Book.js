@@ -40,7 +40,19 @@ const Book = (props) => {
     if (+chaptersTotal < 1) return setRaisedError('Total chapters can\'t be less than 1');
     if (+chaptersTotal > 999) return setRaisedError('Total chapters can\'t be greater than 999');
     setTriggerActionStatus(true);
-    return dispatch(updateProgress(id, currentChap, chaptersTotal));
+
+    if (+currentChap > +chaptersTotal) {
+      setUpdateProgressInputs({
+        chaptersTotal,
+        currentChap: chaptersTotal,
+      });
+    }
+
+    return dispatch(updateProgress(
+      id,
+      +currentChap > +chaptersTotal ? chaptersTotal : currentChap,
+      chaptersTotal,
+    ));
   };
 
   return (
@@ -123,7 +135,8 @@ const Book = (props) => {
                   />
                   <button
                     type="button"
-                    disabled={(+updateProgressInputs.currentChap >= 999)}
+                    disabled={(+updateProgressInputs.currentChap >= 999
+                      || +updateProgressInputs.currentChap >= +updateProgressInputs.chaptersTotal)}
                     onClick={() => setUpdateProgressInputs((state) => ({
                       ...state,
                       currentChap: +state.currentChap + 1,
